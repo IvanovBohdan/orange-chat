@@ -1,0 +1,19 @@
+{
+    "name": "orange-chat",
+    "version": "1.0.0",
+    "description": "",
+    "scripts": {
+        "dev": "turbo run dev",
+        "build": "turbo run build",
+        "start": "turbo run start"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+        "turbo": "^1.10.16"
+    },
+    "workspaces": [
+        "apps/*"
+    ]
+}
