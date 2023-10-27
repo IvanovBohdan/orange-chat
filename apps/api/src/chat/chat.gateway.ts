@@ -17,6 +17,7 @@ import { ChatService } from './chat.service'
 type ObjectId = Types.ObjectId
 
 @WebSocketGateway({
+    // namespace: '/api/chat',
     cors: {
         origin: config.cors.origin,
         methods: ['GET', 'POST'],

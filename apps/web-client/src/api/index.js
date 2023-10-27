@@ -1,10 +1,11 @@
 import axios from 'axios'
 import { io } from 'socket.io-client'
-import { baseURL } from '../config'
 import { getToken, setToken } from '../utils/token'
 import { get } from 'react-hook-form'
 
-export const socket = io(baseURL, {
+const baseURL = window.location.origin
+
+export const socket = io({
     extraHeaders: {
         Authorization: `Bearer ${getToken()}`,
     },
