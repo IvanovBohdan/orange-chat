@@ -37,7 +37,7 @@ export class ChatService {
         client.emit(event, data)
     }
 
-    sendToMany(ids: ObjectId[], event: string, data: any, exclude?: ObjectId) {
+    sendToMany(event: string, ids: ObjectId[], data: any, exclude?: ObjectId) {
         console.log('send to many', ids.map(String), 'exclude', exclude)
         ids.forEach((id) => {
             if (exclude && String(id) === String(exclude)) return

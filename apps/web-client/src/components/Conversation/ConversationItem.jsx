@@ -15,7 +15,7 @@ export default function ConversationItem({ avatar, conversation }) {
                 }}
             >
                 <Avatar
-                    src={avatar || '/default_avatars/male.jpg'}
+                    // src={avatar || '/default_avatars/male.jpg'}
                     alt="avatar"
                     name={name}
                     size="md"

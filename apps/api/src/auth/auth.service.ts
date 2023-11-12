@@ -5,6 +5,7 @@ import { JwtService } from '@nestjs/jwt'
 import * as bcrypt from 'bcrypt'
 import { User } from 'src/user/user.schema'
 import { CreateUserDto } from 'src/user/dto/create-user.dto'
+import { config } from 'src/config'
 
 @Injectable()
 export class AuthService {
@@ -24,12 +25,17 @@ export class AuthService {
         return await this.userService.getUserById(user._id)
     }
 
-    async login(email: string, pass: string){
+    async login(email: string, pass: string) {
         const user = await this.userService.getUserByEmail(email)
         if (user && (await bcrypt.compare(pass, user.password))) {
             const { password, createdAt, updatedAt, ...payload } =
                 user.toObject()
-            return {token: this.jwtService.sign(payload), user: payload}
+            return {
+                token: this.jwtService.sign(payload, {
+                    expiresIn: config.jwt_expiration,
+                }),
+                user: payload,
+            }
         }
         throw new UnauthorizedException()
     }

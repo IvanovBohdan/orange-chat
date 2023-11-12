@@ -1,41 +1,66 @@
 import React, { useContext, useRef, useEffect } from 'react'
-import { Flex, Box, Container } from '@chakra-ui/react'
-import MessageItem from './MessageItem'
-import { useQuery } from '@tanstack/react-query'
+import { Flex, Box, Container, Spinner, Center } from '@chakra-ui/react'
 import { ChatContext } from '../../context/ChatContext'
-import { getMessages } from '../../api/messageApi'
-import { useCurrentUser } from '../../hooks'
+import { useCurrentUser, useInfiniteMessageQuery } from '../../hooks'
+import InfiniteScroll from 'react-infinite-scroll-component'
+import MessageItem from './MessageItem'
 
 export default function MessageBox() {
-    const bottomRef = useRef(null)
     const { conversation } = useContext(ChatContext)
     const currentUser = useCurrentUser()
-    const { data } = useQuery({
-        queryFn: () => getMessages(conversation?._id),
-        queryKey: ['messages', conversation?._id],
-        enabled: !!conversation?._id,
-    })
-    console.log(currentUser._id)
-    const messages = data ?? []
+    const { data, error, fetchNextPage, isFetching, hasNextPage, status } =
+        useInfiniteMessageQuery(conversation)
 
-    useEffect(() => {
-        bottomRef?.current.scrollIntoView({ behavior: 'smooth' })
-    }, [messages])
+    const items = data?.pages.flat() || []
+
+    if (status === 'loading') {
+        return <Box flexGrow={1}></Box>
+    }
+
+    if (status === 'error') {
+        return <>{error.message}</>
+    }
 
     return (
-        <Box flexGrow={1} overflowX="auto">
-            <Container maxW="3xl" p={0}>
-                <Flex flexDirection="column" p={2} flexGrow={1}>
-                    {messages.map(message => (
+        <Flex
+            flexGrow={1}
+            id="scrollableDiv"
+            overflow="auto"
+            flexDirection="column-reverse"
+        >
+            <Container maxW="container.md">
+                <InfiniteScroll
+                    dataLength={items.length}
+                    next={() => isFetching || fetchNextPage()}
+                    style={{
+                        display: 'flex',
+                        flexDirection: 'column-reverse',
+                        overflow: 'hidden',
+                    }}
+                    inverse={true}
+                    hasMore={hasNextPage}
+                    loader={
+                        <Center>
+                            <Spinner />
+                        </Center>
+                    }
+                    // endMessage={
+                    //     <Center>
+                    //         <Box color="gray.400">No more messages</Box>
+                    //     </Center>
+                    // }
+                    scrollableTarget="scrollableDiv"
+                    scrollThreshold={0.6}
+                >
+                    {items.map(message => (
                         <MessageItem
                             key={message._id}
                             message={message}
                             isSent={message.sender === currentUser._id}
                         />
                     ))}
-                </Flex>
-                <div ref={bottomRef} />
+                </InfiniteScroll>
             </Container>
-        </Box>
+        </Flex>
     )
 }

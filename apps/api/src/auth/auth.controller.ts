@@ -13,7 +13,6 @@ export class AuthController {
 
   @Post('register')
   async register(@Body() createUserDto: CreateUserDto) {
-    console.log(createUserDto);
     const user = this.userService.createUser(createUserDto);
     return user;
   }

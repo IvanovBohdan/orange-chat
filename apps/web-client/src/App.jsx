@@ -2,10 +2,10 @@ import React from 'react'
 import './App.css'
 import { ChakraProvider, Box, theme } from '@chakra-ui/react'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-import { ColorModeSwitcher } from './ColorModeSwitcher'
 import ConversationPage from './routes/ConversationPage'
 import LoginPage from './routes/LoginPage'
 import RegistrationPage from './routes/RegistrationPage'
+import UserPage from './routes/UserPage'
 function App() {
     const router = createBrowserRouter([
         {
@@ -15,6 +15,16 @@ function App() {
                 {
                     path: '/chat:conversationId',
                     element: <ConversationPage />,
+                },
+            ],
+        },
+        {
+            path: '/user',
+            element: <UserPage />,
+            children: [
+                {
+                    path: '/user:userId',
+                    element: <UserPage />,
                 },
             ],
         },

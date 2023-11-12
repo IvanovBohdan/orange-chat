@@ -37,10 +37,31 @@ export class MessageService {
         return await this.messageModel.findById(id)
     }
 
-    async getMessagesByConversationId(conversationId: string) {
+    async getMessagesByConversationId(
+        conversationId: string,
+        limit: number = 20,
+    ) {
         return await this.messageModel
             .find({ conversation: new Types.ObjectId(conversationId) })
-            .sort({ createdAt: 1 })
+            .sort({ createdAt: -1 })
+            .limit(limit)
+    }
+
+    async getMessages(
+        conversationId: string,
+        lastId: Types.ObjectId | string,
+        limit: number = 20,
+    ): Promise<Message[]> {
+        if (!lastId)
+            return this.getMessagesByConversationId(conversationId, limit)
+        return this.messageModel
+            .find({
+                _id: { $lt: lastId },
+                conversation: new Types.ObjectId(conversationId),
+            })
+            .sort({ createdAt: -1 })
+            .limit(limit)
+            .exec()
     }
 
     async sendMessage(messageDto: MessageDto) {
@@ -49,8 +70,8 @@ export class MessageService {
             messageDto.conversation,
         )
         this.chatService.sendToMany(
-            conversation.participants,
             'message',
+            conversation.participants,
             message.toObject(),
             messageDto.sender,
         )

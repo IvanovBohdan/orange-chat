@@ -7,12 +7,13 @@ import { AuthModule } from './auth/auth.module'
 import { MessageModule } from './message/message.module'
 import { ConversationModule } from './conversation/conversation.module'
 import { JwtService } from '@nestjs/jwt'
-import { ChatModule } from './chat/chat.module';
+import { ChatModule } from './chat/chat.module'
+import { config } from './config'
 
 @Module({
     imports: [
         UserModule,
-        MongooseModule.forRoot('mongodb://127.0.0.1:27017/orange-chat'),
+        MongooseModule.forRoot(config.mongoURI),
         AuthModule,
         MessageModule,
         ConversationModule,

@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react'
-import { useMediaQuery } from '@chakra-ui/react'
+import { useBreakpointValue, useMediaQuery } from '@chakra-ui/react'
 
 export function useMobileChat(conversationId) {
-    const [isMobile] = useMediaQuery('(max-width: 678px)')
+    const isMobile = useBreakpointValue({ base: true, sm: false })
+    // const [isMobile] = useMediaQuery('(max-width: 678px)')
     const [isChatHidden, setIsChatHidden] = useState(
         !!conversationId || isMobile
     )

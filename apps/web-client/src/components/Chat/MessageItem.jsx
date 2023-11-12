@@ -14,6 +14,7 @@ export default function MessageItem({ message, isSent = false }) {
 
     return (
         <Box
+            wordBreak="break-all"
             my={1}
             p={2}
             fontSize="md"

@@ -1,5 +1,13 @@
 import React, { useEffect, useState } from 'react'
-import { Box, Flex, Heading, Container, useMediaQuery } from '@chakra-ui/react'
+import {
+    Box,
+    Flex,
+    Heading,
+    Container,
+    useMediaQuery,
+    SimpleGrid,
+    Grid,
+} from '@chakra-ui/react'
 import ConversationList from '../components/Conversation/ConversationList'
 import Search from './../components/Search'
 import ChatSection from './../components/Chat/ChatSection'
@@ -23,11 +31,13 @@ export default function ConversationPage() {
 
     useEffect(() => {
         socket.on('message', message => {
-            console.log('message', message)
-            client.setQueriesData(['messages', message.conversation], old => [
-                ...old,
-                message,
-            ])
+            client.setQueriesData(['messages', message.conversation], old => {
+                const firstPage = old?.pages?.[0]
+                return {
+                    pages: [[message, ...firstPage], ...old.pages.slice(1)],
+                    pageParams: old.pageParams,
+                }
+            })
         })
         return () => {
             socket.off('message')
@@ -53,10 +63,13 @@ export default function ConversationPage() {
                 conversation,
             }}
         >
-            <Flex height="100%">
+            <Grid
+                height="100%"
+                width="100%"
+                maxWidth="100vw"
+                templateColumns={['1fr', '1fr 4fr', '2fr 5fr', '2fr 8fr']}
+            >
                 <Box
-                    flexGrow={2}
-                    flexBasis="25%"
                     p={2}
                     display={!isChatHidden && isMobile ? 'none' : 'block'}
                 >
@@ -64,7 +77,7 @@ export default function ConversationPage() {
                     <ConversationList conversations={conversations} />
                 </Box>
                 <ChatSection conversation={conversation} />
-            </Flex>
+            </Grid>
         </ChatContext.Provider>
     )
 }

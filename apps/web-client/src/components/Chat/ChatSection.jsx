@@ -9,11 +9,11 @@ export default function ChatSection({ conversation }) {
     const { isMobile, isChatHidden, toggleChat } = useContext(ChatContext)
     return (
         <Flex
-            flexBasis="75%"
+            // background="orange.100"
             flexDirection="column"
-            flexGrow={1}
             display={isChatHidden ? 'none' : 'flex'}
             height="100vh"
+            maxHeight="100vh"
         >
             <ChatHeader />
             <MessageBox />
