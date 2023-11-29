@@ -2,8 +2,8 @@ import { useContext, useState } from 'react'
 import { Flex, IconButton, Textarea, Box } from '@chakra-ui/react'
 import { FaPaperPlane } from 'react-icons/fa'
 import TextareaAutosize from 'react-textarea-autosize'
-import { ChatContext } from '../../context/ChatContext'
-import { useMessageSend } from '../../hooks'
+import { ChatContext } from '../context/ChatContext'
+import { useMessageSend } from '../hooks'
 
 function MessageTypeControls() {
     const { conversation } = useContext(ChatContext)

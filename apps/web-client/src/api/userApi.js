@@ -12,5 +12,11 @@ export async function login(email, password) {
 
 export async function getUser(id) {
     const response = await http.get(`/api/users/${id}`)
+    console.log(response.data)
+    return response.data
+}
+
+export async function searchUsers(query) {
+    const response = await http.get(`/api/users/search?q=${query}`)
     return response.data
 }

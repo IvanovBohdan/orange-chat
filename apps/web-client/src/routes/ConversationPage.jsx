@@ -1,19 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import {
-    Box,
-    Flex,
-    Heading,
-    Container,
-    useMediaQuery,
-    SimpleGrid,
-    Grid,
-} from '@chakra-ui/react'
-import ConversationList from '../components/Conversation/ConversationList'
+import { Box, Flex, Grid } from '@chakra-ui/react'
+import ConversationList from '../components/ConversationList'
 import Search from './../components/Search'
-import ChatSection from './../components/Chat/ChatSection'
+import ChatSection from './../components/ChatSection'
 import { useParams } from 'react-router-dom'
 import { ChatContext } from '../context/ChatContext'
-import { useCurrentUser, useMobileChat } from '../hooks'
+import { useCurrentUser, useMobileChat, useUsersSearch } from '../hooks'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { getMyConversations } from '../api/conversationApi'
 import { socket } from '../api'
@@ -28,6 +20,7 @@ export default function ConversationPage() {
         queryFn: getMyConversations,
         queryKey: ['conversations'],
     })
+    const { users, searchQuery, setSearchQuery } = useUsersSearch()
 
     useEffect(() => {
         socket.on('message', message => {
@@ -67,15 +60,22 @@ export default function ConversationPage() {
                 height="100%"
                 width="100%"
                 maxWidth="100vw"
-                templateColumns={['1fr', '1fr 4fr', '2fr 5fr', '2fr 8fr']}
+                templateColumns={['1fr', '1fr 3fr', '2fr 5fr', '2fr 8fr']}
             >
-                <Box
+                <Flex
                     p={2}
-                    display={!isChatHidden && isMobile ? 'none' : 'block'}
+                    flexDirection="column"
+                    display={!isChatHidden && isMobile ? 'none' : 'flex'}
                 >
-                    <Search />
-                    <ConversationList conversations={conversations} />
-                </Box>
+                    <Search
+                        value={searchQuery}
+                        onChange={e => setSearchQuery(e.target.value)}
+                    />
+                    <ConversationList
+                        conversations={conversations}
+                        users={users}
+                    />
+                </Flex>
                 <ChatSection conversation={conversation} />
             </Grid>
         </ChatContext.Provider>

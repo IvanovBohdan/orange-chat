@@ -1,7 +1,7 @@
 import { authHttp } from './index'
 
 export const startDialog = async userId => {
-    const { data } = await authHttp.get(
+    const { data } = await authHttp.post(
         `/api/conversation/start-dialog/${userId}`
     )
     return data

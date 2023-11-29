@@ -1,7 +1,7 @@
 import React, { useContext, useRef, useEffect } from 'react'
 import { Flex, Box, Container, Spinner, Center } from '@chakra-ui/react'
-import { ChatContext } from '../../context/ChatContext'
-import { useCurrentUser, useInfiniteMessageQuery } from '../../hooks'
+import { ChatContext } from '../context/ChatContext'
+import { useCurrentUser, useInfiniteMessageQuery } from '../hooks'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import MessageItem from './MessageItem'
 

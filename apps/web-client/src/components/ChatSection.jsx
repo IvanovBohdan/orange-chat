@@ -3,7 +3,7 @@ import { Flex, Heading, Button, Container, Icon, Box } from '@chakra-ui/react'
 import ChatHeader from './ChatHeader'
 import MessageBox from './MessageBox'
 import MessageTypeControls from './MessageTypeControls'
-import { ChatContext } from '../../context/ChatContext'
+import { ChatContext } from '../context/ChatContext'
 
 export default function ChatSection({ conversation }) {
     const { isMobile, isChatHidden, toggleChat } = useContext(ChatContext)

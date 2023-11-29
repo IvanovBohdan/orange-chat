@@ -3,6 +3,7 @@ import { useCurrentUser } from './useCurrentUser'
 import { useMessageSend } from './useMessageSend'
 import { useDialogName } from './useDialogName'
 import { useInfiniteMessageQuery } from './useInfiniteMessageQuery'
+import { useUsersSearch } from './useUsersSearch';
 
 export {
     useMobileChat,
@@ -10,4 +11,5 @@ export {
     useMessageSend,
     useDialogName,
     useInfiniteMessageQuery,
+    useUsersSearch
 }

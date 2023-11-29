@@ -1,9 +1,9 @@
 import React, { useContext } from 'react'
 import { Flex, Heading, Icon } from '@chakra-ui/react'
 import { IoIosArrowBack } from 'react-icons/io'
-import { ColorModeSwitcher } from './../../ColorModeSwitcher'
-import { ChatContext } from '../../context/ChatContext'
-import { useDialogName } from '../../hooks/useDialogName'
+import { ColorModeSwitcher } from '../ColorModeSwitcher'
+import { ChatContext } from '../context/ChatContext'
+import { useDialogName } from '../hooks/useDialogName'
 
 export default function ChatHeader() {
     const { isMobile, toggleChat, conversation } = useContext(ChatContext)

@@ -26,9 +26,8 @@ export class ConversationController {
         )
     }
 
-    @Get('start-dialog/:id')
+    @Post('start-dialog/:id')
     async startNewDialog(@Param('id') id: string, @Request() req: any) {
-        console.log('id', id)
         const conversation = await this.conversationService.getDialog(
             req.user._id,
             new Types.ObjectId(id),

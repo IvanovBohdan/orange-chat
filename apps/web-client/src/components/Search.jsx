@@ -9,7 +9,7 @@ import {
 } from '@chakra-ui/react'
 import { CiSearch } from 'react-icons/ci'
 
-export default function Search() {
+export default function Search({ onChange, value}) {
     return (
         <Flex height={14} alignItems="center">
             <InputGroup height="100%">
@@ -17,6 +17,8 @@ export default function Search() {
                     <Icon as={CiSearch} color="gray.400" />
                 </InputLeftElement>
                 <Input
+                    value={value}
+                    onChange={onChange}
                     type="search"
                     placeholder="Search"
                     focusBorderColor="orange.300"
