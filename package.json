@@ -5,7 +5,8 @@
     "scripts": {
         "dev": "turbo run dev",
         "build": "turbo run build",
-        "start": "turbo run start"
+        "start": "turbo run start",
+        "prod": "node apps/api/dist/main"
     },
     "keywords": [],
     "author": "",
