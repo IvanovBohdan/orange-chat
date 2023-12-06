@@ -6,8 +6,13 @@ import ConversationPage from './routes/ConversationPage'
 import LoginPage from './routes/LoginPage'
 import RegistrationPage from './routes/RegistrationPage'
 import UserPage from './routes/UserPage'
+import HomePage from './routes/HomePage'
 function App() {
     const router = createBrowserRouter([
+        {
+            path: '/',
+            element: <HomePage />,
+        },
         {
             path: '/chat',
             element: <ConversationPage />,
